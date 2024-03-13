@@ -1,0 +1,28 @@
+main {
+  height: 100vh;
+  display: grid;
+  grid-template-areas:
+    'header header header'
+    'aside main main'
+    'footer footer footer';
+  grid-template-rows: 100px 1fr 70px;
+  grid-template-columns: 150px 1fr;
+}
+
+.header {
+  background: green;
+  grid-area: header;
+}
+
+.sidebar {
+  background: pink;
+  grid-area: aside;
+}
+.content {
+  background: yellow;
+  grid-area: main;
+}
+.footer {
+  background: purple;
+  grid-area: footer;
+}

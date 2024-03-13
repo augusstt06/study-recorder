@@ -1,7 +1,7 @@
-import './css/App.css';
+import '@/styles/App.css';
 
 function App() {
-  return <main></main>;
+  return <section className='first-page'>First Page</section>;
 }
 
 export default App;
