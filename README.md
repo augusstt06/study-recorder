@@ -4,8 +4,10 @@
 
 ## Requirements
 
-- Node.js v20.10.0
-- pnpm v8.6.1
+<div>
+<img src="https://img.shields.io/badge/node v20.10.0-339933?style=for-the-badge&logo=node.js&logoColor=white"> 
+<img src="https://img.shields.io/badge/pnpm v8.6.1-F69220?style=for-the-badge&logo=pnpm&logoColor=white">
+</div>
 
 ## Installation
 
