@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import { TypingTextProps } from '@/types/components';
 
 export default function TypingText(props: TypingTextProps) {
-  const { text } = props;
+  const { text, setIsTypingComplete } = props;
   const [mainText, setMainText] = useState<string>('');
   const [count, setCount] = useState<number>(0);
   useEffect(() => {
+    setIsTypingComplete(false);
     const typingText = text ? text : '';
     const interval = setInterval(() => {
       setMainText((mainText) => {
@@ -17,12 +18,18 @@ export default function TypingText(props: TypingTextProps) {
         return updatedText;
       });
       setCount(count + 1);
-    }, 200);
-    count === typingText.length && clearInterval(interval);
-    return () => clearInterval(interval);
+    }, 170);
+    if (count === typingText.length) {
+      clearInterval(interval);
+      setIsTypingComplete(true);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
   });
   return (
-    <p className='text'>
+    <p>
       {mainText}
       <span className='blink' />
     </p>

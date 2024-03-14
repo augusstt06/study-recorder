@@ -1,8 +1,6 @@
 .first-page {
   height: 100vh;
   background: #292929;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: relative;
   color: #fff;
 }
