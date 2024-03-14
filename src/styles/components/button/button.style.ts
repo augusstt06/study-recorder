@@ -1,7 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
-import { ButtonProps } from '@/types/components/button';
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -10,7 +8,7 @@ const fadeIn = keyframes`
     opacity: 1;
   }
 `;
-const StyledButton = styled.button`
+export const MainButton = styled.button`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -30,11 +28,3 @@ const StyledButton = styled.button`
     color: #fff;
   }
 `;
-export default function Button(props: ButtonProps) {
-  const { children } = props;
-  const navigate = useNavigate();
-  const goHome = () => {
-    navigate('/home');
-  };
-  return <StyledButton onClick={goHome}>{children}</StyledButton>;
-}

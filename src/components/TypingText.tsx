@@ -1,7 +1,6 @@
-import '@/styles/components/TypingText.css';
-
 import { useEffect, useState } from 'react';
 
+import { BlinkCursor, Typing } from '@/styles/components/typingText/typingText.style.ts';
 import { TypingTextProps } from '@/types/components';
 
 export default function TypingText(props: TypingTextProps) {
@@ -29,9 +28,9 @@ export default function TypingText(props: TypingTextProps) {
     };
   });
   return (
-    <p>
+    <Typing>
       {mainText}
-      <span className='blink' />
-    </p>
+      <BlinkCursor />
+    </Typing>
   );
 }
