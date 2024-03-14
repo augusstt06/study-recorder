@@ -1,4 +1,13 @@
+@font-face {
+  font-family: '사각사각';
+  font-weight: normal;
+  src: url('../fonts/사각사각.ttf');
+}
 * {
   margin: 0px;
   padding: 0px;
+}
+
+body {
+  font-family: '사각사각';
 }
