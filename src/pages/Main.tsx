@@ -1,13 +1,15 @@
+import '@/styles/pages/Main.css';
+
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import TypingText from '@/components/TypingText';
 import { MainButton } from '@/styles/components/button/button.style';
+import { MainPageProps } from '@/types/pages';
 
-export default function Main() {
-  const navigate = useNavigate();
+export default function Main(props: MainPageProps) {
+  const { movePage } = props;
   const goHome = () => {
-    navigate('/home');
+    movePage('/home');
   };
   const [isTypingComplete, setIsTypingComplete] = useState<boolean>(false);
 

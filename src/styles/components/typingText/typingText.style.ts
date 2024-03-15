@@ -6,6 +6,8 @@ export const Typing = styled.p`
   left: 50%;
   transform: translateX(-50%);
   font-size: 2.5rem;
+  width: 100vw;
+  text-align: center;
 `;
 
 const blink = keyframes`
