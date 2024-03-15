@@ -1,27 +1,18 @@
 import '@/styles/App.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import TypingText from './components/TypingText';
-import { MainButton } from './styles/components/button/button.style';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Main from './pages/Main';
 
 function App() {
-  const navigate = useNavigate();
-  const goHome = () => {
-    navigate('/home');
-  };
-  const [isTypingComplete, setIsTypingComplete] = useState<boolean>(false);
-
-  const renderHomeBtn = () => {
-    if (isTypingComplete) return <MainButton onClick={goHome}>Go Record</MainButton>;
-    return null;
-  };
-  console.log(isTypingComplete);
   return (
-    <section className='first-page'>
-      <TypingText text='Records for Your Programming!' setIsTypingComplete={setIsTypingComplete} />
-      {renderHomeBtn()}
-    </section>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Main />} />
+        <Route path='/home' element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -17,14 +17,14 @@ export const MainButton = styled.button`
   font-size: 1rem;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #e2d4ea;
-  background: #e2d4ea;
+  border: 1px solid #9a9a9a;
+  background: #9a9a9a;
   transition: all ease-in-out 1s;
   animation: ${fadeIn} 1s ease-in;
-  color: #808080;
+  color: #fff;
   &:hover {
-    border: 1px solid #a883c0;
-    background: #a883c0;
+    border: 1px solid #fff;
+    background: #3f3f3f;
     color: #fff;
   }
 `;
