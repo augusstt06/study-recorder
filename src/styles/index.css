@@ -11,3 +11,7 @@
 body {
   font-family: '사각사각';
 }
+
+input:focus {
+  outline: none;
+}
