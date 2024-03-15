@@ -10,7 +10,11 @@ export default function Home() {
       <aside>
         <Sidebar />
       </aside>
-      <section className='content'>Main</section>
+      <section className='content'>
+        <div className='input-group'>
+          <input type='text' />
+        </div>
+      </section>
       <footer className='footer'>Footer</footer>
     </main>
   );
