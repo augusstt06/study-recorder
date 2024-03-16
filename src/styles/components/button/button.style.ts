@@ -28,3 +28,17 @@ export const MainButton = styled.button`
     color: #fff;
   }
 `;
+
+export const SaveButton = styled.button`
+  font-family: '사각사각';
+  padding: 10px;
+  border: 2px solid #4682b4;
+  background: #4682b4;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all ease-in-out 0.7s;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;

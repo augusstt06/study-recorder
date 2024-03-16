@@ -19,14 +19,30 @@
 }
 
 aside {
+  padding: 10px;
   grid-area: aside;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: start;
   align-items: center;
 }
 .content {
-  background: yellow;
+  padding: 10px;
   grid-area: main;
+}
+.main-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  gap: 15px;
 }
 .footer {
   background: purple;
