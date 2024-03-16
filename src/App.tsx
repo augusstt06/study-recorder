@@ -1,6 +1,6 @@
 import '@/styles/App.css';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Home from './pages/Home';
@@ -19,9 +19,7 @@ function App() {
       }, 400);
     }
   };
-  useEffect(() => {
-    console.log(pageRef);
-  }, [pageRef]);
+
   return (
     <div ref={pageRef} className='loaded'>
       <Routes>
