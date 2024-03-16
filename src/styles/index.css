@@ -10,6 +10,7 @@
 
 body {
   font-family: '사각사각';
+  background: #292929;
 }
 
 input:focus {

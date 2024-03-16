@@ -16,9 +16,9 @@
   }
 }
 .loaded {
-  animation: 0.4s ease load forwards;
+  animation: 0.4s ease-in-out load forwards;
 }
 
 .unloaded {
-  animation: 0.4s ease unload forwards;
+  animation: 0.4s ease-in-out unload forwards;
 }
