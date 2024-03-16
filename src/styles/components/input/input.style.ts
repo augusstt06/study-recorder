@@ -42,4 +42,7 @@ export const CategoryInput = styled.input`
       color: #fff;
     }
   }
+  @media screen and (max-width: 845px) {
+    width: 40vw;
+  }
 `;
