@@ -60,7 +60,8 @@ aside {
 }
 
 .list-item {
-  width: 35vw;
+  cursor: pointer;
+  width: 30vw;
   padding: 10px;
   border: 2px solid #799fbf;
   border-radius: 10px;
@@ -68,7 +69,7 @@ aside {
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   transition: all ease-in-out 0.8s;
 }
 .list-item:hover {
@@ -77,14 +78,15 @@ aside {
   transform: scale(1.1);
   box-shadow: 5px 5px 3px #666;
 }
-.list-item > p:nth-child(1) {
-  cursor: pointer;
-  transition: all ease-in-out 0.7s;
+.list-item > p:nth-child(2) {
+  font-size: 0.8rem;
 }
-.list-item > p:nth-child(1):hover {
-  transform: scale(1.1);
-}
+
 .footer {
-  background: purple;
+  background: #4f4f4f;
   grid-area: footer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

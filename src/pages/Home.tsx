@@ -1,3 +1,4 @@
+import Footer from '@/components/footer/Footer';
 import Sidebar from '@/components/sidebar/Sidebar';
 import { SaveButton } from '@/styles/components/button/button.style';
 import { MainInput } from '@/styles/components/input/input.style';
@@ -11,6 +12,7 @@ export default function Home() {
     { placeholder: 'title' },
     { placeholder: 'description' },
   ];
+
   return (
     <main className='home'>
       <header className='header'>
@@ -29,15 +31,17 @@ export default function Home() {
           <SaveButton>Save</SaveButton>
         </div>
         <div className='main-list'>
-          <h1>저장된 링크가 없습니다.</h1>
+          <h1>#Git</h1>
+          {/* <h1>저장된 링크가 없습니다.</h1> */}
           <div className='list-item'>
             <p>GitHub</p>
             <p>내 포트폴리오</p>
-            <p>#Github</p>
           </div>
         </div>
       </section>
-      <footer className='footer'>Footer</footer>
+      <footer className='footer'>
+        <Footer />
+      </footer>
     </main>
   );
 }
