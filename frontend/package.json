@@ -10,7 +10,8 @@
     "postinstall": "husky install",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "ts-node ./server/server.js"
   },
   "dependencies": {
     "react": "^18.2.0",
