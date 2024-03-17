@@ -28,13 +28,17 @@ pnpm i
 ### Development
 
 <div>
+<h3>Frontend</h3>
 <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
-<img src="https://img.shields.io/badge/express-F6E05E?style=for-the-badge&logo=Node.js&logoColor=white">
 
 <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled components&logoColor=white">
 </div>
+<h3>Backend</h3>
+<img src="https://img.shields.io/badge/express-F6E05E?style=for-the-badge&logo=Node.js&logoColor=white">
+<img src="https://img.shields.io/badge/nodemon-76D04B?style=for-the-badge&logo=Nodemon&logoColor=white">
+<img src="https://img.shields.io/badge/tsnode-3178C6?style=for-the-badge&logo=tsnode&logoColor=white">
 
 ## Feature
 
