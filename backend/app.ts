@@ -15,8 +15,7 @@ app.get("/", async (req: Request, res: Response) => {
   try {
     const connection = await pool.getConnection();
     const sql = "select * from records";
-    const [rows, fields] = await connection.query(sql); // 쿼리 실행
-
+    const [rows] = await connection.query(sql);
     res.send(rows);
     connection.release();
   } catch (err) {
