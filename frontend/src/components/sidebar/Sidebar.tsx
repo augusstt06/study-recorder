@@ -1,19 +1,24 @@
 import '@/styles/components/sidebar/Sidebar.css';
-import { IoLogoJavascript } from 'react-icons/io5';
+import { SidebarProps } from '@/types/components';
+import { matchingIcon } from '@/utils/matchingIcon';
+import { useEffect, useState } from 'react';
 import { MdSaveAs } from 'react-icons/md';
-import { RiReactjsLine } from 'react-icons/ri';
 
-export default function Sidebar() {
-  // FIXME: 추후, 리스트를 props로 받아오기
+export default function Sidebar(props: SidebarProps) {
+  const [categoryMenu, setCategoryMenu] = useState<{ icon: JSX.Element; title: string }[]>([]);
+  const { category } = props;
   const shortcutMenu = [
     { icon: <MdSaveAs style={{ width: '25px', height: '25px' }} />, title: 'Current Save' },
   ];
-  const categoryMenu = [
-    { icon: <IoLogoJavascript style={{ width: '25px', height: '25px' }} />, title: 'Javascript' },
-    { icon: <RiReactjsLine style={{ width: '25px', height: '25px' }} />, title: 'React' },
-  ];
+
+  useEffect(() => {
+    const convertObject = category.map((data) => matchingIcon(data));
+    setCategoryMenu(convertObject);
+  }, [category]);
+  console.log(categoryMenu);
+
   return (
-    <div className='sidebar'>
+    <section className='sidebar'>
       <input type='text' />
       <div className='menu-wrapper'>
         {shortcutMenu.map((data, index) => (
@@ -34,6 +39,6 @@ export default function Sidebar() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
