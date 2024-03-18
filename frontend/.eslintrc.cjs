@@ -26,6 +26,7 @@ module.exports = {
         allowSeparatedGroups: true,
       },
     ],
+    'import/no-unresolved': [{ caseSensitive: false }],
     'import/order': [
       'error',
       {
