@@ -11,6 +11,7 @@ const mysql = require("mysql2");
 const dbConfig = require("./config/db.config");
 const pool = mysql.createPool(dbConfig).promise();
 
+// 전체 db 조회
 app.get("/", async (req: Request, res: Response) => {
   res.header(CORS, process.env.CLIENT_URL);
   try {
@@ -24,6 +25,7 @@ app.get("/", async (req: Request, res: Response) => {
   }
 });
 
+// 요청으로 온 특정 문자열데이터를 category컬럼에 가지고 있는 데이터 조회
 app.get("/:category", async (req: Request, res: Response) => {
   res.header(CORS, process.env.CLIENT_URL);
   try {
