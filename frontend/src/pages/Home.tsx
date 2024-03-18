@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import Footer from '@/components/footer/Footer';
 import Sidebar from '@/components/sidebar/Sidebar';
 import { SaveButton } from '@/styles/components/button/button.style';
@@ -12,7 +13,17 @@ export default function Home() {
     { placeholder: 'title' },
     { placeholder: 'description' },
   ];
+  const query = useQuery({
+    queryKey: ['db'],
+    queryFn: async () => {
+      const res = await fetch('http://localhost:4000', {
+        method: 'GET',
+      });
+      return res.json();
+    },
+  });
 
+  console.log(query.data);
   return (
     <main className='home'>
       <header className='header'>
