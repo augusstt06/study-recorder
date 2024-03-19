@@ -1,3 +1,4 @@
+import { MdDelete } from 'react-icons/md';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Footer from '@/components/footer/Footer';
@@ -8,7 +9,7 @@ import '@/styles/pages/Home.css';
 import '@/styles/pages/Home.media.css';
 import Loading from '@/components/loading/Lodaing';
 import { InputListType, ResponseDB } from '@/types';
-import { API_URL, GET, POST } from '@/constant';
+import { API_URL, DELETE, POST } from '@/constant';
 
 export default function Home() {
   // variables
@@ -33,7 +34,7 @@ export default function Home() {
       onChange: (e: ChangeEvent<HTMLInputElement>) => setUrlInput(e.target.value),
     },
     {
-      placeholder: '#category',
+      placeholder: 'category',
       value: categoryInput,
       onChange: (e: ChangeEvent<HTMLInputElement>) => setCategoryInput(e.target.value),
     },
@@ -53,10 +54,15 @@ export default function Home() {
     if (isSuccess) {
       if (saveList.length === 0) return <h1>저장된 링크가 없습니다.</h1>;
       return saveList.map((data: ResponseDB, index: number) => (
-        <div className='list-item' key={index}>
-          <p>{data.title}</p>
-          <p>{data.description}</p>
-        </div>
+        <section key={index} className='list'>
+          <div className='list-item'>
+            <p>{data.title}</p>
+            <p>{data.description}</p>
+          </div>
+          <div className='delete' onClick={() => handleClickDelete(data.title)}>
+            <MdDelete style={{ width: '30px', height: '30px' }} />
+          </div>
+        </section>
       ));
     }
   };
@@ -70,10 +76,12 @@ export default function Home() {
   } = useQuery<ResponseDB[]>({
     queryKey: ['db'],
     queryFn: async () => {
-      const res = await fetch(API_URL, {
-        method: GET,
-      });
-      return res.json();
+      try {
+        const res = await fetch(API_URL);
+        return res.json();
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 
@@ -107,6 +115,19 @@ export default function Home() {
       refetchList();
     },
   });
+  const { mutate: deleteData } = useMutation({
+    mutationKey: ['deleteData'],
+    mutationFn: async (title: string) => {
+      const res = await fetch(`${API_URL}/delete/${title}`, {
+        method: DELETE,
+      });
+      console.log('delete', res);
+      return res.json();
+    },
+    onSuccess: () => {
+      refetchList();
+    },
+  });
 
   // event function
   const handleClickSave = () => {
@@ -121,6 +142,9 @@ export default function Home() {
     saveData();
   };
 
+  const handleClickDelete = (title: string) => {
+    deleteData(title);
+  };
   useEffect(() => {
     if (isSuccess) setCategory(saveList.map((data: ResponseDB) => data.category));
   }, [saveList, isSuccess]);
