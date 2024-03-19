@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { SERVER_ERR_CODE, SERVER_ERR_MSG, SERVER_PORT } from "./constant";
-import { ResponseDBList } from "./types";
+import { ResponseDBList, TData } from "./types";
 
 require("dotenv").config();
 const express = require("express");
@@ -45,9 +45,20 @@ app.get("/:category", async (req: Request, res: Response) => {
 
 // post 요청
 app.post("/save", async (req: Request, res: Response) => {
-  console.log(req.body);
-  res.send(req.body);
-  // FIXME: sql로 데이터 넣어주기
+  try {
+    const reqData: TData = req.body;
+    const { url, title, description, category } = reqData;
+    const sql: string = `INSERT INTO records VALUE('${url}', '${title}', '${description}', '#${category}')`;
+    const checkDatabaseSql: string = `SELECT * FROM records where url='${url}'`;
+    const connection = await pool.getConnection();
+    await connection.query(sql);
+    const [rows] = await connection.query(checkDatabaseSql);
+    res.send(rows);
+    connection.release();
+  } catch (err) {
+    console.log(err);
+    res.status(SERVER_ERR_CODE).send(SERVER_ERR_MSG);
+  }
 });
 app.listen(PORT, () => {
   console.log("--------------------------------------");
