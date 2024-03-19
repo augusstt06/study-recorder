@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { CORS, SERVER_ERR_CODE, SERVER_ERR_MSG, SERVER_PORT } from "./constant";
+import { SERVER_ERR_CODE, SERVER_ERR_MSG, SERVER_PORT } from "./constant";
 import { ResponseDBList } from "./types";
 
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT: number = SERVER_PORT;
 
@@ -11,9 +12,11 @@ const mysql = require("mysql2");
 const dbConfig = require("./config/db.config");
 const pool = mysql.createPool(dbConfig).promise();
 
+app.use(cors());
+app.use(express.json());
+
 // 전체 db 조회
 app.get("/", async (req: Request, res: Response) => {
-  res.header(CORS, process.env.CLIENT_URL);
   try {
     const connection = await pool.getConnection();
     const sql: string = "SELECT * FROM records";
@@ -27,7 +30,6 @@ app.get("/", async (req: Request, res: Response) => {
 
 // 요청으로 온 특정 문자열데이터를 category컬럼에 가지고 있는 데이터 조회
 app.get("/:category", async (req: Request, res: Response) => {
-  res.header(CORS, process.env.CLIENT_URL);
   try {
     const category: string = req.params.category;
     const sql: string = `SELECT * FROM records WHERE category = '#${category}'`;
@@ -39,6 +41,13 @@ app.get("/:category", async (req: Request, res: Response) => {
     console.log(err);
     res.status(SERVER_ERR_CODE).send(SERVER_ERR_MSG);
   }
+});
+
+// post 요청
+app.post("/save", async (req: Request, res: Response) => {
+  console.log(req.body);
+  res.send(req.body);
+  // FIXME: sql로 데이터 넣어주기
 });
 app.listen(PORT, () => {
   console.log("--------------------------------------");
