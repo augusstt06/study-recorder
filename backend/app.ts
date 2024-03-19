@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { SERVER_ERR_CODE, SERVER_ERR_MSG, SERVER_PORT } from "./constant";
+import {
+  SERVER_ERR_CODE,
+  SERVER_ERR_MSG,
+  SERVER_PORT,
+  SERVER_SUCCESS_CODE,
+  SUCCESS_MSG,
+} from "./constant";
 import { ResponseDBList, TData } from "./types";
 
 require("dotenv").config();
@@ -15,13 +21,14 @@ const pool = mysql.createPool(dbConfig).promise();
 app.use(cors());
 app.use(express.json());
 
+// get
 // 전체 db 조회
 app.get("/", async (req: Request, res: Response) => {
   try {
     const connection = await pool.getConnection();
     const sql: string = "SELECT * FROM records";
     const [rows]: ResponseDBList = await connection.query(sql);
-    res.send(rows);
+    res.status(SERVER_SUCCESS_CODE).send(rows);
     connection.release();
   } catch (err) {
     res.status(SERVER_ERR_CODE).send(SERVER_ERR_MSG);
@@ -35,7 +42,10 @@ app.get("/:category", async (req: Request, res: Response) => {
     const sql: string = `SELECT * FROM records WHERE category = '#${category}'`;
     const connection = await pool.getConnection();
     const [rows]: ResponseDBList = await connection.query(sql);
-    res.send(rows);
+    res.send({
+      status: SERVER_SUCCESS_CODE,
+      result: rows,
+    });
     connection.release();
   } catch (err) {
     console.log(err);
@@ -43,18 +53,37 @@ app.get("/:category", async (req: Request, res: Response) => {
   }
 });
 
-// post 요청
+// post
 app.post("/save", async (req: Request, res: Response) => {
   try {
     const reqData: TData = req.body;
     const { url, title, description, category } = reqData;
     const sql: string = `INSERT INTO records VALUE('${url}', '${title}', '${description}', '#${category}')`;
-    const checkDatabaseSql: string = `SELECT * FROM records where url='${url}'`;
+
     const connection = await pool.getConnection();
     await connection.query(sql);
-    const [rows] = await connection.query(checkDatabaseSql);
-    res.send(rows);
+    res.send({
+      status: SERVER_SUCCESS_CODE,
+      result: SUCCESS_MSG,
+    });
     connection.release();
+  } catch (err) {
+    console.log(err);
+    res.status(SERVER_ERR_CODE).send(SERVER_ERR_MSG);
+  }
+});
+
+// delete
+app.delete("/delete/:title", async (req: Request, res: Response) => {
+  try {
+    const title: string = req.params.title;
+    const sql: string = `DELETE FROM records where title='${title}'`;
+    const connection = await pool.getConnection();
+    await connection.query(sql);
+    res.send({
+      status: SERVER_SUCCESS_CODE,
+      result: SUCCESS_MSG,
+    });
   } catch (err) {
     console.log(err);
     res.status(SERVER_ERR_CODE).send(SERVER_ERR_MSG);
