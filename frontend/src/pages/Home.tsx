@@ -11,10 +11,19 @@ import { InputListType, ResponseDB } from '@/types';
 import { API_URL, GET, POST } from '@/constant';
 
 export default function Home() {
+  // variables
   const [urlInput, setUrlInput] = useState<string>('');
   const [categoryInput, setCategoryInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
   const [descriptionInput, setDescriptionInput] = useState<string>('');
+  const isInputEmpty = () => {
+    return (
+      urlInput.length !== 0 &&
+      categoryInput.length !== 0 &&
+      titleInput.length !== 0 &&
+      descriptionInput.length !== 0
+    );
+  };
 
   const [category, setCategory] = useState<string[]>([]);
   const inputList: InputListType = [
@@ -39,10 +48,25 @@ export default function Home() {
       onChange: (e: ChangeEvent<HTMLInputElement>) => setDescriptionInput(e.target.value),
     },
   ];
+  const renderList = () => {
+    if (isLoading) return <Loading />;
+    if (isSuccess) {
+      if (saveList.length === 0) return <h1>저장된 링크가 없습니다.</h1>;
+      return saveList.map((data: ResponseDB, index: number) => (
+        <div className='list-item' key={index}>
+          <p>{data.title}</p>
+          <p>{data.description}</p>
+        </div>
+      ));
+    }
+  };
+
+  // fetching
   const {
     data: saveList,
     isLoading,
     isSuccess,
+    refetch: refetchList,
   } = useQuery<ResponseDB[]>({
     queryKey: ['db'],
     queryFn: async () => {
@@ -75,18 +99,26 @@ export default function Home() {
         console.log(err);
       }
     },
+    onSuccess: () => {
+      setCategoryInput('');
+      setDescriptionInput('');
+      setTitleInput('');
+      setUrlInput('');
+      refetchList();
+    },
   });
-  const renderList = () => {
-    if (isLoading) return <Loading />;
-    if (isSuccess) {
-      if (saveList.length === 0) return <h1>저장된 링크가 없습니다.</h1>;
-      return saveList.map((data: ResponseDB, index: number) => (
-        <div className='list-item' key={index}>
-          <p>{data.title}</p>
-          <p>{data.description}</p>
-        </div>
-      ));
+
+  // event function
+  const handleClickSave = () => {
+    if (categoryInput.startsWith('#')) {
+      alert('#을 제거하고 카테고리를 입력하세요.');
+      return;
     }
+    if (!isInputEmpty()) {
+      alert('입력하지 않은 항목이 있습니다.');
+      return;
+    }
+    saveData();
   };
 
   useEffect(() => {
@@ -114,7 +146,7 @@ export default function Home() {
               />
             ))}
           </div>
-          <SaveButton onClick={() => saveData()}>Save</SaveButton>
+          <SaveButton onClick={handleClickSave}>Save</SaveButton>
         </div>
         <div className='main-list'>
           {/* FIXME: 선택한 카테고리 default는 all */}

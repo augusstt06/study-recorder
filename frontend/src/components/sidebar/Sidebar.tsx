@@ -12,7 +12,7 @@ export default function Sidebar(props: SidebarProps) {
   ];
 
   useEffect(() => {
-    const convertObject = category.map((data) => matchingIcon(data));
+    const convertObject = category.map((data) => matchingIcon(data.slice(1).toUpperCase()));
     setCategoryMenu(convertObject);
   }, [category]);
 
