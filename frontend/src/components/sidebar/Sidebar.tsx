@@ -15,7 +15,6 @@ export default function Sidebar(props: SidebarProps) {
     const convertObject = category.map((data) => matchingIcon(data));
     setCategoryMenu(convertObject);
   }, [category]);
-  console.log(categoryMenu);
 
   return (
     <section className='sidebar'>

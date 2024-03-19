@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Footer from '@/components/footer/Footer';
 import Sidebar from '@/components/sidebar/Sidebar';
 import { SaveButton } from '@/styles/components/button/button.style';
@@ -7,16 +7,37 @@ import { MainInput } from '@/styles/components/input/input.style';
 import '@/styles/pages/Home.css';
 import '@/styles/pages/Home.media.css';
 import Loading from '@/components/loading/Lodaing';
-import { ResponseDB } from '@/types';
-import { API_URL, GET } from '@/constant';
+import { InputListType, ResponseDB } from '@/types';
+import { API_URL, GET, POST } from '@/constant';
 
 export default function Home() {
+  const [urlInput, setUrlInput] = useState<string>('');
+  const [categoryInput, setCategoryInput] = useState<string>('');
+  const [titleInput, setTitleInput] = useState<string>('');
+  const [descriptionInput, setDescriptionInput] = useState<string>('');
+
   const [category, setCategory] = useState<string[]>([]);
-  const inputList = [
-    { placeholder: 'url' },
-    { placeholder: '#category' },
-    { placeholder: 'title' },
-    { placeholder: 'description' },
+  const inputList: InputListType = [
+    {
+      placeholder: 'url',
+      value: urlInput,
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setUrlInput(e.target.value),
+    },
+    {
+      placeholder: '#category',
+      value: categoryInput,
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setCategoryInput(e.target.value),
+    },
+    {
+      placeholder: 'title',
+      value: titleInput,
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setTitleInput(e.target.value),
+    },
+    {
+      placeholder: 'description',
+      value: descriptionInput,
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setDescriptionInput(e.target.value),
+    },
   ];
   const {
     data: saveList,
@@ -32,6 +53,29 @@ export default function Home() {
     },
   });
 
+  const { mutate: saveData } = useMutation({
+    mutationKey: ['saveData'],
+    mutationFn: async () => {
+      try {
+        const data = {
+          url: urlInput,
+          category: categoryInput,
+          title: titleInput,
+          description: descriptionInput,
+        };
+        const res = await fetch(`${API_URL}/save`, {
+          method: POST,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        return res.json();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
   const renderList = () => {
     if (isLoading) return <Loading />;
     if (isSuccess) {
@@ -61,10 +105,16 @@ export default function Home() {
         <div className='main-top'>
           <div className='input-group'>
             {inputList.map((data, index) => (
-              <MainInput type='text' placeholder={data.placeholder} key={index} />
+              <MainInput
+                key={index}
+                type='text'
+                placeholder={data.placeholder}
+                value={data.value}
+                onChange={data.onChange}
+              />
             ))}
           </div>
-          <SaveButton>Save</SaveButton>
+          <SaveButton onClick={() => saveData()}>Save</SaveButton>
         </div>
         <div className='main-list'>
           {/* FIXME: 선택한 카테고리 default는 all */}
