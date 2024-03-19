@@ -10,13 +10,16 @@
     "postinstall": "husky install",
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "ts-node ./server/server.js"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.28.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.3",
+    "react-spinners": "^0.13.8",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {

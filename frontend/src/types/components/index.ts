@@ -4,3 +4,7 @@ export type TypingTextProps = {
   text: string;
   setIsTypingComplete: Dispatch<SetStateAction<boolean>>;
 };
+
+export type SidebarProps = {
+  category: string[];
+};

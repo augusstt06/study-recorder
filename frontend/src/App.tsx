@@ -1,4 +1,5 @@
 import '@/styles/App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { useRef } from 'react';
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -31,9 +32,12 @@ function App() {
 }
 
 export default function AppRouter() {
+  const queryClient = new QueryClient();
   return (
     <BrowserRouter>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </BrowserRouter>
   );
 }
