@@ -1,3 +1,4 @@
+import { categoryStore } from '@/store/store';
 import '@/styles/components/sidebar/Sidebar.css';
 import { SidebarProps } from '@/types/components';
 import { matchingIcon } from '@/utils/matchingIcon';
@@ -5,16 +6,17 @@ import { useEffect, useState } from 'react';
 import { MdSaveAs } from 'react-icons/md';
 
 export default function Sidebar(props: SidebarProps) {
+  const { setCategory } = categoryStore();
   const [categoryMenu, setCategoryMenu] = useState<{ icon: JSX.Element; title: string }[]>([]);
-  const { category } = props;
+  const { categoryList } = props;
   const shortcutMenu = [
     { icon: <MdSaveAs style={{ width: '25px', height: '25px' }} />, title: 'Current Save' },
   ];
 
   useEffect(() => {
-    const convertObject = category.map((data) => matchingIcon(data.slice(1).toUpperCase()));
+    const convertObject = categoryList.map((data) => matchingIcon(data.slice(1)));
     setCategoryMenu(convertObject);
-  }, [category]);
+  }, [categoryList]);
 
   return (
     <section className='sidebar'>
@@ -32,7 +34,13 @@ export default function Sidebar(props: SidebarProps) {
       </div>
       <div className='menu-wrapper'>
         {categoryMenu.map((data, index) => (
-          <div className='menu' key={index}>
+          <div
+            className='menu'
+            key={index}
+            onClick={() => {
+              setCategory(data.title);
+            }}
+          >
             {data.icon}
             <p>{data.title}</p>
           </div>

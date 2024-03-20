@@ -103,3 +103,18 @@ aside {
   align-items: center;
   justify-content: center;
 }
+
+.category-title {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.category-reset {
+  transition: all ease-in-out 0.6s;
+  cursor: pointer;
+}
+.category-reset:hover {
+  color: #ec5353;
+}

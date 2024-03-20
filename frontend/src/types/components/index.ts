@@ -6,5 +6,5 @@ export type TypingTextProps = {
 };
 
 export type SidebarProps = {
-  category: string[];
+  categoryList: string[];
 };

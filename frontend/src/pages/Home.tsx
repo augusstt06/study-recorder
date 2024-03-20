@@ -1,4 +1,6 @@
+import { BiReset } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
+
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Footer from '@/components/footer/Footer';
@@ -10,9 +12,11 @@ import '@/styles/pages/Home.media.css';
 import Loading from '@/components/loading/Lodaing';
 import { InputListType, ResponseDB } from '@/types';
 import { API_URL, DELETE, POST } from '@/constant';
+import { categoryStore } from '@/store/store';
 
 export default function Home() {
   // variables
+  const { category, resetCategory } = categoryStore();
   const [urlInput, setUrlInput] = useState<string>('');
   const [categoryInput, setCategoryInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
@@ -26,7 +30,7 @@ export default function Home() {
     );
   };
 
-  const [category, setCategory] = useState<string[]>([]);
+  const [categoryList, setCategoryList] = useState<string[]>([]);
   const inputList: InputListType = [
     {
       placeholder: 'url',
@@ -49,10 +53,26 @@ export default function Home() {
       onChange: (e: ChangeEvent<HTMLInputElement>) => setDescriptionInput(e.target.value),
     },
   ];
+
   const renderList = () => {
     if (isLoading) return <Loading />;
     if (isSuccess) {
       if (saveList.length === 0) return <h1>저장된 링크가 없습니다.</h1>;
+      if (category !== 'All') {
+        return saveList
+          .filter((data) => data.category.slice(1) === category)
+          .map((data: ResponseDB, index: number) => (
+            <section key={index} className='list'>
+              <div className='list-item'>
+                <p>{data.title}</p>
+                <p>{data.description}</p>
+              </div>
+              <div className='delete' onClick={() => handleClickDelete(data.title)}>
+                <MdDelete style={{ width: '30px', height: '30px' }} />
+              </div>
+            </section>
+          ));
+      }
       return saveList.map((data: ResponseDB, index: number) => (
         <section key={index} className='list'>
           <div className='list-item'>
@@ -145,8 +165,9 @@ export default function Home() {
   const handleClickDelete = (title: string) => {
     deleteData(title);
   };
+
   useEffect(() => {
-    if (isSuccess) setCategory(saveList.map((data: ResponseDB) => data.category));
+    if (isSuccess) setCategoryList(saveList.map((data: ResponseDB) => data.category));
   }, [saveList, isSuccess]);
 
   return (
@@ -155,7 +176,7 @@ export default function Home() {
         <h1>augusst's Recorder</h1>
       </header>
       <aside>
-        <Sidebar category={category} />
+        <Sidebar categoryList={categoryList} />
       </aside>
       <section className='content'>
         <div className='main-top'>
@@ -174,7 +195,17 @@ export default function Home() {
         </div>
         <div className='main-list'>
           {/* FIXME: 선택한 카테고리 default는 all */}
-          <h1>#All</h1>
+          <div className='category-title'>
+            <h1>#{category}</h1>
+            <div
+              className='category-reset'
+              onClick={() => {
+                resetCategory();
+              }}
+            >
+              <BiReset style={{ width: '25px', height: '25px' }} />
+            </div>
+          </div>
           {renderList()}
         </div>
       </section>
