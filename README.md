@@ -1,6 +1,6 @@
 # Study-Recorder
 
-프로그래밍 공부를 하며 유익한 정보가 있는 사이트 및 영상들을 기록하여 접속하기 편하게 해주는 어플리케이션
+프로그래밍 공부를 하며 참고할 정보가 있는 사이트 및 영상들을 기록하여 접속하기 편하게 해주는 어플리케이션
 
 ## Requirements
 
@@ -35,6 +35,7 @@ pnpm i
 
 <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled components&logoColor=white">
 <img src="https://img.shields.io/badge/react query-FF4154?style=for-the-badge&logo=react query&logoColor=white">
+<img src="https://img.shields.io/badge/zustand-F6E05E?style=for-the-badge&logo=zustand&logoColor=white">
 </div>
 <h3>Backend</h3>
 <div>

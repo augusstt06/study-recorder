@@ -4,23 +4,23 @@ import { RiReactjsLine } from 'react-icons/ri';
 import { SiTypescript } from 'react-icons/si';
 
 export function matchingIcon(category: string) {
-  switch (category) {
+  switch (category.toUpperCase()) {
     case 'GOOGLE':
       return {
         icon: <FaGoogle style={{ width: '25px', height: '25px' }} />,
-        title: 'Google',
+        title: category,
       };
     case 'REACT':
-      return { icon: <RiReactjsLine style={{ width: '25px', height: '25px' }} />, title: 'React' };
+      return { icon: <RiReactjsLine style={{ width: '25px', height: '25px' }} />, title: category };
     case 'JS' || 'JAVASCRIPT':
       return {
         icon: <IoLogoJavascript style={{ width: '25px', height: '25px' }} />,
-        title: 'Javascript',
+        title: category,
       };
     case 'TS' || 'TYPESCRIPT':
       return {
         icon: <SiTypescript style={{ width: '25px', height: '25px' }} />,
-        title: 'Typescript',
+        title: category,
       };
     default:
       return {
