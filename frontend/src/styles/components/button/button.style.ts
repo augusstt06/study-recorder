@@ -8,7 +8,7 @@ const fadeIn = keyframes`
     opacity: 1;
   }
 `;
-export const MainButton = styled.button`
+export const StyledMainButton = styled.button`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -29,7 +29,7 @@ export const MainButton = styled.button`
   }
 `;
 
-export const SaveButton = styled.button`
+export const StyledSaveButton = styled.button`
   font-family: '사각사각';
   padding: 10px;
   border: 2px solid #4682b4;
