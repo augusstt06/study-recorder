@@ -167,7 +167,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (isSuccess) setCategoryList(saveList.map((data: ResponseDB) => data.category));
+    if (isSuccess)
+      setCategoryList(Array.from(new Set(saveList.map((data: ResponseDB) => data.category))));
   }, [saveList, isSuccess]);
 
   return (
