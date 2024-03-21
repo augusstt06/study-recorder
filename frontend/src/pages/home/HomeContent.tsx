@@ -1,36 +1,28 @@
+import '@/styles/pages/home/homeContent.css';
+
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+
 import { BiReset } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
 
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import Footer from '@/components/footer/Footer';
-import Sidebar from '@/components/sidebar/Sidebar';
-import { SaveButton } from '@/styles/components/button/button.style';
+import { StyledSaveButton } from '@/styles/components/button/button.style';
 import { MainInput } from '@/styles/components/input/input.style';
-import '@/styles/pages/Home.css';
-import '@/styles/pages/Home.media.css';
 import Loading from '@/components/loading/Lodaing';
-import { InputListType, ResponseDB } from '@/types';
-import { API_URL, DELETE, POST } from '@/constant';
-import { categoryStore } from '@/store/store';
+import { categoryListStore, categoryStore } from '@/store/store';
 
-export default function Home() {
+import { API_URL, POST, DELETE } from '@/constant';
+import { InputListType, ResponseDB } from '@/types';
+
+export default function HomeContent() {
   // variables
+  const { setCategoryList } = categoryListStore();
   const { category, resetCategory } = categoryStore();
   const [urlInput, setUrlInput] = useState<string>('');
   const [categoryInput, setCategoryInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
   const [descriptionInput, setDescriptionInput] = useState<string>('');
-  const isInputEmpty = () => {
-    return (
-      urlInput.length !== 0 &&
-      categoryInput.length !== 0 &&
-      titleInput.length !== 0 &&
-      descriptionInput.length !== 0
-    );
-  };
 
-  const [categoryList, setCategoryList] = useState<string[]>([]);
   const inputList: InputListType = [
     {
       placeholder: 'url',
@@ -53,6 +45,14 @@ export default function Home() {
       onChange: (e: ChangeEvent<HTMLInputElement>) => setDescriptionInput(e.target.value),
     },
   ];
+  const isInputEmpty = () => {
+    return (
+      urlInput.length !== 0 &&
+      categoryInput.length !== 0 &&
+      titleInput.length !== 0 &&
+      descriptionInput.length !== 0
+    );
+  };
 
   const renderList = () => {
     if (isLoading) return <Loading />;
@@ -87,7 +87,7 @@ export default function Home() {
     }
   };
 
-  // fetching
+  //  fetch
   const {
     data: saveList,
     isLoading,
@@ -148,8 +148,7 @@ export default function Home() {
       refetchList();
     },
   });
-
-  // event function
+  // event
   const handleClickSave = () => {
     if (categoryInput.startsWith('#')) {
       alert('#을 제거하고 카테고리를 입력하세요.');
@@ -170,49 +169,36 @@ export default function Home() {
     if (isSuccess)
       setCategoryList(Array.from(new Set(saveList.map((data: ResponseDB) => data.category))));
   }, [saveList, isSuccess]);
-
   return (
-    <main className='home'>
-      <header className='header'>
-        <h1>augusst's Recorder</h1>
-      </header>
-      <aside>
-        <Sidebar categoryList={categoryList} />
-      </aside>
-      <section className='content'>
-        <div className='main-top'>
-          <div className='input-group'>
-            {inputList.map((data, index) => (
-              <MainInput
-                key={index}
-                type='text'
-                placeholder={data.placeholder}
-                value={data.value}
-                onChange={data.onChange}
-              />
-            ))}
-          </div>
-          <SaveButton onClick={handleClickSave}>Save</SaveButton>
+    <section className='content'>
+      <div className='main-top'>
+        <div className='input-group'>
+          {inputList.map((data, index) => (
+            <MainInput
+              key={index}
+              type='text'
+              placeholder={data.placeholder}
+              value={data.value}
+              onChange={data.onChange}
+            />
+          ))}
         </div>
-        <div className='main-list'>
-          {/* FIXME: 선택한 카테고리 default는 all */}
-          <div className='category-title'>
-            <h1>#{category}</h1>
-            <div
-              className='category-reset'
-              onClick={() => {
-                resetCategory();
-              }}
-            >
-              <BiReset style={{ width: '25px', height: '25px' }} />
-            </div>
+        <StyledSaveButton onClick={handleClickSave}>Save</StyledSaveButton>
+      </div>
+      <div className='main-list'>
+        <div className='category-title'>
+          <h1>#{category}</h1>
+          <div
+            className='category-reset'
+            onClick={() => {
+              resetCategory();
+            }}
+          >
+            <BiReset style={{ width: '25px', height: '25px' }} />
           </div>
-          {renderList()}
         </div>
-      </section>
-      <footer className='footer'>
-        <Footer />
-      </footer>
-    </main>
+        {renderList()}
+      </div>
+    </section>
   );
 }

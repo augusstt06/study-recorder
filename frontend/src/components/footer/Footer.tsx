@@ -1,9 +1,9 @@
-import '@/styles/components/footer/footer.style.css';
 import { BiLogoGmail } from 'react-icons/bi';
 import { FaGithub } from 'react-icons/fa';
 import { SiGitbook } from 'react-icons/si';
 
 import { GIT, GITBOOK } from '@/constant';
+import { StyledFooter } from '@/styles/components/footer/footer.style';
 
 export default function Footer() {
   const iconList = [
@@ -21,12 +21,14 @@ export default function Footer() {
     },
   ];
   return (
-    <div className='footer-icon'>
-      {iconList.map((data, index) => (
-        <div key={index} className='icon'>
-          <a href={data.url}>{data.icon}</a>
-        </div>
-      ))}
-    </div>
+    <footer>
+      <StyledFooter>
+        {iconList.map((data, index) => (
+          <div key={index}>
+            <a href={data.url}>{data.icon}</a>
+          </div>
+        ))}
+      </StyledFooter>
+    </footer>
   );
 }

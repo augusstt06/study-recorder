@@ -1,10 +1,10 @@
-import '@/styles/App.css';
+import '@/styles/app.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { useRef } from 'react';
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
-import Home from './pages/Home';
+import Home from './pages/home/Home';
 import Main from './pages/Main';
 
 function App() {

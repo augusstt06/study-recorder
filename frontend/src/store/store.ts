@@ -6,6 +6,11 @@ type TCategoryStore = {
   setCategory: (data: string) => void;
   resetCategory: () => void;
 };
+
+type TCategoryList = {
+  categoryList: string[];
+  setCategoryList: (data: string[]) => void;
+};
 export const categoryStore = create<TCategoryStore>()(
   devtools(
     persist(
@@ -16,6 +21,20 @@ export const categoryStore = create<TCategoryStore>()(
         },
         resetCategory: () => {
           set({ category: 'All' });
+        },
+      }),
+      { name: 'categoryStore' },
+    ),
+  ),
+);
+
+export const categoryListStore = create<TCategoryList>()(
+  devtools(
+    persist(
+      (set) => ({
+        categoryList: [],
+        setCategoryList: (data: string[]) => {
+          set({ categoryList: data });
         },
       }),
       { name: 'categoryStore' },

@@ -3,7 +3,7 @@ import '@/styles/pages/Main.css';
 import { useState } from 'react';
 
 import TypingText from '@/components/TypingText';
-import { MainButton } from '@/styles/components/button/button.style';
+import { StyledMainButton } from '@/styles/components/button/button.style';
 import { MainPageProps } from '@/types/pages';
 
 export default function Main(props: MainPageProps) {
@@ -14,7 +14,7 @@ export default function Main(props: MainPageProps) {
   const [isTypingComplete, setIsTypingComplete] = useState<boolean>(false);
 
   const renderHomeBtn = () => {
-    if (isTypingComplete) return <MainButton onClick={goHome}>Go Record</MainButton>;
+    if (isTypingComplete) return <StyledMainButton onClick={goHome}>Go Record</StyledMainButton>;
     return null;
   };
   return (
